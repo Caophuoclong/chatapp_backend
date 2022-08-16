@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppGateway } from './app.gateway';
+import { UserModule } from './user/user.module';
 import databaseConfig from './config/database.config';
 
 @Module({
@@ -20,6 +21,7 @@ import databaseConfig from './config/database.config';
           username: configService.get('USERNAME'),
           password: configService.get('PASSWORD'),
           database: configService.get('DATABASE'),
+          autoLoadEntities: true,
         };
       },
       inject: [ConfigService],
@@ -27,6 +29,7 @@ import databaseConfig from './config/database.config';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    UserModule,
   ],
   controllers: [],
   providers: [AppGateway],
